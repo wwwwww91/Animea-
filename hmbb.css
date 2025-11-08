@@ -1,0 +1,257 @@
+body {            
+  background-color: #aecedc;
+ }
+.headpicture::before {
+  content: ""; /* 伪元素必须有content属性 */
+  position: absolute; /* 绝对定位，覆盖图片 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* 半透明灰色：rgba(灰色值, 透明度)，最后一个值0-1控制透明 */
+  background-color: rgb(27 22 22 / 41%); 
+  pointer-events: none; /* 让鼠标事件穿透图层，不影响图片悬停缩放 */
+  z-index:1;
+}
+.headpicture::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 25%; /* 阴影高度 */
+  background: linear-gradient(to top, 
+    rgb(42 49 65 / 90%), /* 底部深色（与卡片背景一致） */
+    rgba(15, 23, 42, 0.6), 
+    transparent
+  );
+  pointer-events: none; /* 不影响图片交互 */
+  z-index:2;
+}
+.headpicture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  position: relative;/* 确保图片在渐变层下方（可选，因伪元素是绝对定位） */
+  margin-bottom: 3rem;
+}
+/* 卡片宽度：可改为固定宽度（如w-80）或百分比（如w-full） */
+.headpicture {    
+  display: block; /* 可选：消除图片默认的inline空隙 */  
+  margin: 0 auto;/* 可选：水平居中 */
+  overflow: hidden;
+}
+
+.character {  
+  /* 网格布局 */  
+  display: grid;  
+  /* 列数：最小宽度280px，自动填充，最多5列 */  
+  grid-template-columns: repeat(auto-fill, minmax(240px, 4fr));  
+  /* 行之间的间距（垂直间距），如果有多行的话 */  
+  row-gap: 2rem; /* 32px，可调整 */  
+  /* 可选：添加最大宽度限制，防止容器过宽 */  
+  max-width: 1600px; /* 根据5张卡片宽度+间距计算（280*5 + 1.5*4=1406px，留有余量） */  
+  margin: 0 auto; /* 水平居中 */  
+  padding: 2rem 1rem; /* 左右内边距，适配移动端 */
+}
+.custom-card {
+  /* 卡片宽度：可改为固定宽度（如w-80）或百分比（如w-full） */  
+  width: 100%; /* 响应式宽度，适应父容器 */  
+  max-width: 300px; /* 最大宽度限制，防止过大 */    
+  /* 卡片背景色：替换为你需要的颜色 */  
+  background-color: rgb(231 227 241); /* 深蓝色背景（带透明度） */    
+  /* 边框样式：颜色、粗细、圆角 */  
+  border: 1px solid rgb(69 58 79 / 30%); /* 紫色边框（带透明度） */  
+  border-radius: 1rem; /* 圆角大小（数值越大越圆） */    
+  /* 阴影效果 */  
+  box-shadow: 0 8px 24px rgba(126, 34, 206, 0.15); /* 淡紫色阴影 */  
+  overflow: hidden; /* 确保图片和内容不超出圆角 */  
+  transition: all 0.3s 
+  ease; /* 过渡动画，保持平滑效果 */  
+  margin-left: rem;
+}
+
+
+.title {
+  color:#314d68;
+  margin-left:2rem;
+  font-weight: 1000;
+  font-size: 2rem;
+}
+
+
+/* 角色介绍容器：一行2个，响应式适配 */
+.character-grid {
+  display: grid;
+  /* 一行2列，最小宽度300px，自动填充 */
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+  gap: 2.5rem; /* 角色卡片之间的间距（水平+垂直） */
+  max-width: 1400px; /* 限制最大宽度，避免过宽 */
+  margin: 2rem auto; /* 上下间距+水平居中 */
+  padding: 0 1rem; /* 左右内边距，适配移动端 */
+}
+
+/* 单个角色卡片：图片+文字横向排列 */
+.character-card {
+  display: flex; /* 横向排列图片和文字 */
+  align-items: flex-start; /* 顶部对齐 */
+  background-color: rgb(236 239 243 / 80%); /* 与卡片一致的深色背景 */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(26 46 55 / 30%); /* 紫色边框 */
+  border-radius: 1.25rem; /* 圆角 */
+  overflow: hidden;
+  padding: 1.5rem;
+  transition: all 0.3s ease; /* 悬停动画 */
+}
+
+/* 角色卡片悬停效果 */
+.character-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgb(63 108 134 / 30%);
+  border-color: rgb(93 66 120 / 60%);
+}
+
+/* 角色图片样式 */
+.character-img {
+  width: 150px; /* 图片固定宽度 */
+  height: 150px; /* 图片固定高度（正方形） */
+  border-radius: 1rem; /* 图片圆角 */
+  object-fit: cover; /* 裁剪填充，不拉伸 */
+  margin-right: 1.25rem; /* 图片与文字的间距 */
+  flex-shrink: 0; /* 防止图片被压缩 */
+  border: 2px solid rgb(98 118 139 / 50%); /* 图片边框 */
+}
+
+/* 角色文字介绍区域 */
+.character-info {
+  flex: 1; /* 文字区域占满剩余空间 */
+}
+
+/* 角色姓名 */
+.character-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #56728e; /* 白色姓名 */
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+/* 悬停时姓名变色 */
+.character-card:hover .character-name {
+  color: #78a7d2; /* 紫色高亮 */
+}
+
+/* 角色职位/标签 */
+.character-role {
+  font-size: 0.9rem;
+  color: rgb(132 172 219); /* 紫色标签 */
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+/* 角色介绍文字 */
+.character-desc {
+  font-size: 0.95rem;
+  color: #74859d; /* 淡灰色文字 */
+  line-height: 1.6; /* 行高，提升可读性 */
+}
+
+/* 响应式适配：移动端一行1个，纵向排列 */
+@media (max-width: 767px) {
+  .character-card {
+    flex-direction: column; /* 纵向排列图片和文字 */
+    align-items: center; /* 居中对齐 */
+    text-align: center; /* 文字居中 */
+  }
+
+  .character-img {
+    margin-right: 0; /* 取消横向间距 */
+    margin-bottom: 1rem; /* 图片与文字的纵向间距 */
+    width: 150px; /* 移动端图片放大 */
+    height: 150px;
+  }
+}
+
+
+/* 角色介绍容器：一行2个，响应式适配 */
+.IP-grid {   
+  /* 一行2列，最小宽度300px，自动填充 */  
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));  
+  gap: 2.5rem; /* 角色卡片之间的间距（水平+垂直） */  
+  max-width: 1400px; /* 限制最大宽度，避免过宽 */  
+  margin: 2rem auto; /* 上下间距+水平居中 */  
+  padding: 0 1rem; /* 左右内边距，适配移动端 */
+}
+/* 单个角色卡片：图片+文字横向排列 */
+.IP-card {  
+  display: flex; /* 横向排列图片和文字 */  
+  align-items: flex-start; /* 顶部对齐 */  
+  background-color: rgb(236 239 243 / 80%); /* 与卡片一致的深色背景 */  
+  backdrop-filter: blur(8px);  
+  border: 1px solid rgb(26 46 55 / 30%); /* 紫色边框 */  
+  border-radius: 1rem; /* 圆角 */  
+  overflow: hidden;  
+  padding: 1.5rem;  
+  transition: all 0.3s 
+  ease; /* 悬停动画 */
+}
+/* 角色卡片悬停效果 */
+.IP-card:hover {  
+  transform: translateY(-6px);  
+  box-shadow: 0 12px 28px rgb(63 108 134 / 30%);  
+  border-color: rgb(93 66 120 / 60%);
+}
+/* 角色图片样式 */
+.IP-img {  
+  width: 150px; /* 图片固定宽度 */  
+  height: 150px; /* 图片固定高度（正方形） */  
+  border-radius: 1rem; /* 图片圆角 */  
+  object-fit: cover; /* 裁剪填充，不拉伸 */  
+  margin-right: 1.25rem; /* 图片与文字的间距 */  
+  flex-shrink: 0; /* 防止图片被压缩 */  
+  border: 2px solid rgb(98 118 139 / 50%); /* 图片边框 */
+}
+/* 角色文字介绍区域 */
+.IP-info {  
+  flex: 1; /* 文字区域占满剩余空间 */
+}
+/* 角色姓名 */
+.IP-name {  
+  font-size: 2rem;  
+  font-weight: 700;  
+  color:  #1d3144; /* 白色姓名 */  
+  margin-bottom: 0.5rem;  IP
+  transition: color 0.3s ease;
+}
+/* 悬停时姓名变色 */
+.IP-card:hover .IP-name {  
+  color: #425c73; /* 紫色高亮 */
+}
+/* 角色职位/标签 */
+.IP-role {  
+  font-size: 0.9rem;  
+  color: rgb(117 152 193); /* 紫色标签 */  
+  margin-bottom: 1rem;  
+  font-weight: 500;
+}
+/* 角色介绍文字 */
+.IP-desc {  
+  font-size: 0.95rem;  
+  color: #535f70; /* 淡灰色文字 */  
+  line-height: 1.6; /* 行高，提升可读性 */
+}
+/* 响应式适配：移动端一行1个，纵向排列 */
+@media (max-width: 767px) {
+  .IP-card {    
+    flex-direction: column; /* 纵向排列图片和文字 */    
+    align-items: center; /* 居中对齐 */    
+    text-align: center; /* 文字居中 */
+  }
+  .IP-img {    
+    margin-right: 0; /* 取消横向间距 */    
+    margin-bottom: 1rem; /* 图片与文字的纵向间距 */    
+    width: 150px; /* 移动端图片放大 */    
+    height: 150px;
+  }
+}
